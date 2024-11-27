@@ -25,8 +25,6 @@ Upon logging in, they can select an emoji based on how they feel. They will then
 
 ### This is an example of the selection interface:  
 
-<img src="img/mood_selection.png" alt="Mood selection interface" width="600"/>
+<img src="img/mood_sel_with_history.png" alt="Mood selection interface" width="600"/>
 
----
 
-### And this is the selection interface with history
