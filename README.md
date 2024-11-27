@@ -1,3 +1,3 @@
 # EXCS Movember Hackathon
-**Team:** Misha Artemiev, Etienne Hackett, Emre Acarsoy
+# Team: Misha Artemiev, Etienne Hackett, Emre Acarsoy
 
