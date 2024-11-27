@@ -21,6 +21,8 @@ This is an example of the login screen:
 
 <img src="img/login_interface.png" alt="Login interface" width="800"/>
 
+---
+
 And this is an example of the selection interface:  
 
 <img src="img/mood_selection.png" alt="Mood selection interface" width="600"/>
