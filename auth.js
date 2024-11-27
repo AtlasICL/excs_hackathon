@@ -2,6 +2,7 @@ const loginTab = document.getElementById('login-tab');
 const registerTab = document.getElementById('register-tab');
 const loginScreen = document.getElementById('login-screen');
 const registerScreen = document.getElementById('register-screen');
+const moodTrackerScreen = document.getElementById('mood-tracker-screen');
 const registerButton = document.getElementById('register-button');
 const loginButton = document.getElementById('login-button');
 
@@ -71,8 +72,9 @@ loginButton.addEventListener('click', async () => {
         const result = await response.json();
         if (result.status === 'approved') {
             alert(`Login approved. Welcome, ${username}!`);
+            // Hide the login screen and show the mood tracker screen
             loginScreen.classList.add('hidden');
-            // Show mood tracker or other screen here
+            moodTrackerScreen.classList.remove('hidden');
         } else {
             alert(result.message || 'Invalid credentials. Please try again.');
         }
