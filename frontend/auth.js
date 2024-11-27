@@ -89,6 +89,17 @@ loginButton.addEventListener("click", async () => {
     } else {
       alert(result.message || "Invalid credentials. Please try again.");
     }
+    const getRequest = {
+      token: result.token,
+    };
+    const getResponse = await fetch("https://climberlog.co.uk:8065/get", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(getRequest),
+    });
+    const getResult = await getResponse.json();
+    console.log(getResult);
+    populateMoodGrid(getResult);
   } catch (error) {
     console.error("Error during login:", error);
     alert("An error occurred during login. Please try again.");
@@ -160,8 +171,85 @@ submitButton.addEventListener("click", async () => {
       alert("Unexpected response from the server.");
       console.error("Unexpected response:", result);
     }
+    const getRequest = {
+      token: token,
+    };
+    resultDisplay.textContent = "";
+    suggestionDisplay.textContent = "";
+    const getResponse = await fetch("https://climberlog.co.uk:8065/get", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(getRequest),
+    });
+    const getResult = await getResponse.json();
+    console.log(getResult);
+    populateMoodGrid(getResult);
   } catch (error) {
     console.error("Error during mood submission:", error);
     alert("An error occurred while submitting your mood. Please try again.");
   }
 });
+
+const moodImages = {
+  happy: "images/happy.png",
+  angry: "images/angry.png",
+  anxious: "images/anxious.png",
+  neutral: "images/neutral.png",
+  sad: "images/sad.png",
+  tired: "images/tired.png",
+};
+
+/**
+ * Resets the grid container by clearing its content.
+ */
+function resetMoodGrid() {
+  const gridContainer = document.getElementById("mood-history-grid");
+  gridContainer.innerHTML = ""; // Clear previous content
+}
+
+/**
+ * Fills the mood grid with mood data or leaves squares empty if no data is available.
+ * @param {Array} moods - An array of moods with each element being [moodName, moodDate].
+ */
+function fillMoodGrid(moods = []) {
+  const gridContainer = document.getElementById("mood-history-grid");
+
+  for (let i = 0; i < 28; i++) {
+    const square = document.createElement("div");
+    square.classList.add("square");
+
+    if (moods.length > i) {
+      // Populate square with mood data
+      const mood = moods[moods.length - 1 - i]; // Use the latest moods in reverse order
+      const moodName = mood[0];
+      const moodDate = mood[1];
+
+      // Add mood image
+      const img = document.createElement("img");
+      img.src = moodImages[moodName] || "images/default.png"; // Fallback to a default image
+      img.alt = moodName;
+
+      // Add mood date
+      const dateText = document.createElement("div");
+      dateText.textContent = moodDate;
+
+      square.appendChild(img);
+      square.appendChild(dateText);
+    } else {
+      // Leave square empty
+      square.classList.add("empty"); // Optional: Add a class for empty squares
+    }
+
+    gridContainer.appendChild(square);
+  }
+}
+
+/**
+ * Resets the mood grid and fills it with the given response data.
+ * @param {Object} response - The response object containing moods data.
+ */
+function populateMoodGrid(response) {
+  const moods = response.moods || []; // Use an empty array if moods are undefined
+  resetMoodGrid();
+  fillMoodGrid(moods);
+}

@@ -1,89 +1,159 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Emoji Picker with Login</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin: 20px;
-        }
-        .hidden {
-            display: none;
-        }
-        .emoji-container {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 15px;
-            margin-top: 20px;
-        }
-        .emoji {
-            width: 100px;
-            height: 100px;
-            cursor: pointer;
-            transition: transform 0.2s;
-        }
-        .emoji:hover {
-            transform: scale(1.2);
-        }
-        .form-container, .mood-tracker-container {
-            margin-top: 30px;
-        }
-        input, button {
-            margin: 10px 0;
-            padding: 10px;
-            width: 80%;
-            max-width: 300px;
-            font-size: 16px;
-        }
-        .suggestion {
-            margin-top: 10px;
-            font-size: 16px;
-            font-style: italic;
-            color: #555;
-        }
-    </style>
-</head>
-<body>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Emoji Picker with Login</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                text-align: center;
+                margin: 20px;
+            }
+            .hidden {
+                display: none;
+            }
+            .emoji-container {
+                display: flex;
+                justify-content: center;
+                flex-wrap: wrap;
+                gap: 15px;
+                margin-top: 20px;
+            }
+            .emoji {
+                width: 100px;
+                height: 100px;
+                cursor: pointer;
+                transition: transform 0.2s;
+            }
+            .emoji:hover {
+                transform: scale(1.2);
+            }
+            .form-container,
+            .mood-tracker-container {
+                margin-top: 30px;
+            }
+            input,
+            button {
+                margin: 10px 0;
+                padding: 10px;
+                width: 80%;
+                max-width: 300px;
+                font-size: 16px;
+            }
+            .suggestion {
+                margin-top: 10px;
+                font-size: 16px;
+                font-style: italic;
+                color: #555;
+            }
+            .grid-container {
+                display: grid;
+                grid-template-columns: repeat(7, 100px);
+                grid-template-rows: repeat(4, 100px);
+                gap: 10px;
+                margin-top: 20px;
+                justify-content: center;
+            }
+            .square {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                background-color: #ffffff;
+                border: 2px solid #ccc;
+                border-radius: 10px;
+                text-align: center;
+                font-family: Arial, sans-serif;
+                font-size: 12px;
+                padding: 5px;
+            }
+            .square img {
+                width: 40px;
+                height: 40px;
+                margin-bottom: 5px;
+            }
+        </style>
+    </head>
+    <body>
+        <h1 id="welcome-title">Welcome to the Mood Tracker</h1>
 
-    <h1 id="welcome-title">Welcome to the Mood Tracker</h1>
-
-    <div id="auth-tabs">
-        <button id="login-tab">Login</button>
-        <button id="register-tab">Register</button>
-    </div>
-
-    <div id="register-screen" class="form-container hidden">
-        <input type="text" id="register-username" placeholder="Enter Username">
-        <input type="password" id="register-password" placeholder="Enter Password">
-        <button id="register-button">Register</button>
-    </div>
-
-    <div id="login-screen" class="form-container">
-        <input type="text" id="username" placeholder="Enter Username">
-        <input type="password" id="password" placeholder="Enter Password">
-        <button id="login-button">Login</button>
-    </div>
-
-    <div id="mood-tracker-screen" class="hidden">
-        <h2>Select Your Mood</h2>
-        <div class="emoji-container">
-            <img src="images/angry.png" alt="Angry" class="emoji" data-emoji="angry">
-            <img src="images/anxious.png" alt="Anxious" class="emoji" data-emoji="anxious">
-            <img src="images/happy.png" alt="Happy" class="emoji" data-emoji="happy">
-            <img src="images/neutral.png" alt="Neutral" class="emoji" data-emoji="neutral">
-            <img src="images/sad.png" alt="Sad" class="emoji" data-emoji="sad">
-            <img src="images/tired.png" alt="Tired" class="emoji" data-emoji="tired">
+        <div id="auth-tabs">
+            <button id="login-tab">Login</button>
+            <button id="register-tab">Register</button>
         </div>
-        <p id="result" style="margin-top: 20px; font-size: 18px;"></p>
-        <p id="suggestion" class="suggestion"></p>
-        <button id="submit" style="margin-top: 20px;">Submit</button>
-        <button id="logout-button" class="hidden" style="margin-top: 20px;">Logout</button>
-    </div>
 
-    <script src="auth.js" defer></script>
-</body>
+        <div id="register-screen" class="form-container hidden">
+            <input
+                type="text"
+                id="register-username"
+                placeholder="Enter Username"
+            />
+            <input
+                type="password"
+                id="register-password"
+                placeholder="Enter Password"
+            />
+            <button id="register-button">Register</button>
+        </div>
+
+        <div id="login-screen" class="form-container">
+            <input type="text" id="username" placeholder="Enter Username" />
+            <input type="password" id="password" placeholder="Enter Password" />
+            <button id="login-button">Login</button>
+        </div>
+
+        <div id="mood-tracker-screen" class="hidden">
+            <h2>Select Your Mood</h2>
+            <div class="emoji-container">
+                <img
+                    src="images/angry.png"
+                    alt="Angry"
+                    class="emoji"
+                    data-emoji="angry"
+                />
+                <img
+                    src="images/anxious.png"
+                    alt="Anxious"
+                    class="emoji"
+                    data-emoji="anxious"
+                />
+                <img
+                    src="images/happy.png"
+                    alt="Happy"
+                    class="emoji"
+                    data-emoji="happy"
+                />
+                <img
+                    src="images/neutral.png"
+                    alt="Neutral"
+                    class="emoji"
+                    data-emoji="neutral"
+                />
+                <img
+                    src="images/sad.png"
+                    alt="Sad"
+                    class="emoji"
+                    data-emoji="sad"
+                />
+                <img
+                    src="images/tired.png"
+                    alt="Tired"
+                    class="emoji"
+                    data-emoji="tired"
+                />
+            </div>
+            <p id="result" style="margin-top: 20px; font-size: 18px"></p>
+            <p id="suggestion" class="suggestion"></p>
+            <button id="submit" style="margin-top: 20px">Submit</button>
+            <button id="logout-button" class="hidden" style="margin-top: 20px">
+                Logout
+            </button>
+
+            <h2>Mood History</h2>
+            <div class="grid-container" id="mood-history-grid"></div>
+        </div>
+
+        <script src="auth.js" defer></script>
+    </body>
 </html>
