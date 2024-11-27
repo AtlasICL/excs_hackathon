@@ -125,16 +125,42 @@ emojis.forEach((emoji) => {
     });
 });
 
-submitButton.addEventListener('click', () => {
+submitButton.addEventListener('click', async () => {
     if (!selectedEmoji) {
         alert('Please select an emoji before submitting.');
         return;
     }
 
+    // const token = auth token (implement this)
+
     const moodData = {
-        username: document.getElementById('username').value, // Replace with actual username from login if needed
+        token: token,
         mood: selectedEmoji,
     };
+
+    try {
+        // Send POST request to /record
+        const response = await fetch('https://climberlog.co.uk:8065/record', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(moodData),
+        });
+
+        const result = await response.json();
+
+        if (result.status === 'approved') {
+            alert('Mood submission approved! Thank you.');
+            console.log('Mood submission response:', result);
+        } else if (result.status === 'dropped') {
+            alert('Mood submission was dropped. Please try again.');
+        } else {
+            alert('Unexpected response from the server.');
+            console.error('Unexpected response:', result);
+        }
+    } catch (error) {
+        console.error('Error during mood submission:', error);
+        alert('An error occurred while submitting your mood. Please try again.');
+    }
 
     console.log('Mood Data:', moodData);
     alert('Mood submitted successfully!');
