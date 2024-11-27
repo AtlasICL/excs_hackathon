@@ -8,6 +8,8 @@ You can log in with the following details:
 - username: "test_username"
 - password: "test_password"
 
+---
+
 ## Summary
 
 Our project is a mood tracking website. Users can register with a username and password, and log in to track their mood.  
