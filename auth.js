@@ -32,7 +32,7 @@ registerButton.addEventListener('click', async () => {
 
     // Send JSON to the /register path
     try {
-        const response = await fetch('/register', {
+        const response = await fetch('https://climberlog.co.uk:8065/register', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(registerData)
