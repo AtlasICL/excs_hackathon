@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mood selector</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+        .emoji-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        .emoji {
+            width: 100px;
+            height: 100px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .emoji:hover {
+            transform: scale(1.2);
+        }
+    </style>
+</head>
+<body>
+    <h1>How are you feeling?</h1>
+    <div class="emoji-container">
+        <!-- Emoji images -->
+        <img src="images/happy.png" alt="Happy" class="emoji" data-emoji="happy">
+        <img src="images/sad.png" alt="Sad" class="emoji" data-emoji="sad">
+        <img src="images/angry.png" alt="Angry" class="emoji" data-emoji="angry">
+        <img src="images/love.png" alt="Love" class="emoji" data-emoji="love">
+        <img src="images/surprised.png" alt="Surprised" class="emoji" data-emoji="surprised">
+        <img src="images/calm.png" alt="Calm" class="emoji" data-emoji="calm">
+    </div>
+    <p id="result" style="margin-top: 20px; font-size: 18px;"></p>
+
+    <script>
+        // Get all emoji elements
+        const emojis = document.querySelectorAll('.emoji');
+        const resultDisplay = document.getElementById('result');
+
+        // Add click event listeners to each emojis
+        emojis.forEach(emoji => {
+            emoji.addEventListener('click', () => {
+                // Get the emoji name from the data attribute
+                const emojiName = emoji.getAttribute('data-emoji');
+                resultDisplay.textContent = `You selected: ${emojiName}`;
+                console.log(`Emoji clicked: ${emojiName}`);
+            });
+        });
+    </script>
+</body>
+</html>
