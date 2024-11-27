@@ -164,7 +164,4 @@ submitButton.addEventListener("click", async () => {
     console.error("Error during mood submission:", error);
     alert("An error occurred while submitting your mood. Please try again.");
   }
-
-  console.log("Mood Data:", moodData);
-  alert("Mood submitted successfully!");
 });
