@@ -1,4 +1,3 @@
 # EXCS Hackathon
 
-Team: Etienne Hackett, Mykhailo Artemiev, Emre Acarsoy
-
+Team: Etienne Hackett, Misha Artemiev, Emre Acarsoy
