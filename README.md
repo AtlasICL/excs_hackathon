@@ -1,7 +1,7 @@
 # EXCS Movember Hackathon
 ## Team: Misha Artemiev, Etienne Hackett, Emre Acarsoy
 
-This is our team submission for the Exeter Computer Science Movember Hackathon, with the theme Code for Good / Men's Health.  
+This is our team submission for the EXCS Movember Hackathon, with the theme Code for Good / Men's Health.  
 
 ## Summary
 
