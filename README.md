@@ -7,7 +7,7 @@ This is our team submission for the EXCS Movember Hackathon, with the theme Code
 
 ### The website is online at (https://climberlog.co.uk)  
 You can register your own username and password, or log in with the following details:
-    - username: "test_username"
+- username: "test_username"
 - password: "test_password"
 
 ---
