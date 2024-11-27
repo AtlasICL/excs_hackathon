@@ -57,7 +57,11 @@ func GetRequest(req: Request) async throws -> Response {
     guard try await ValidateUser(token: userUUID!) else {
         return GenrerateResponse(dictionary: ["status": "dropped"])
     }
+    let formatter = DateFormatter()
+    formatter.dateStyle = .medium
+    formatter.timeStyle = .short
+    
     let userMoods = try await UserMood.query(on: app.db).filter(\.$userId == userUUID!).all()
-    print(userMoods.map { ($0.mood, $0.created) })
-    return GenrerateResponse(dictionary: ["status": "approved", "moods": userMoods.map(\.mood)])
+    let userMoodsUnwrapped = userMoods.map { [$0.mood, formatter.string(from: $0.created!)] }
+    return GenrerateResponse(dictionary: ["status": "approved", "moods": userMoodsUnwrapped])
 }
