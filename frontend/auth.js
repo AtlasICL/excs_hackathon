@@ -8,6 +8,11 @@ const registerButton = document.getElementById('register-button');
 const loginButton = document.getElementById('login-button');
 const logoutButton = document.getElementById('logout-button');
 
+const emojis = document.querySelectorAll('.emoji');
+const resultDisplay = document.getElementById('result');
+const suggestionDisplay = document.getElementById('suggestion');
+const submitButton = document.getElementById('submit');
+let selectedEmoji = null;
 
 // Toggle between login and register screens
 loginTab.addEventListener('click', () => {
@@ -94,4 +99,43 @@ logoutButton.addEventListener('click', () => {
     authTabs.classList.remove('hidden');
     loginScreen.classList.remove('hidden');
     logoutButton.classList.add('hidden');
+});
+
+emojis.forEach((emoji) => {
+    emoji.addEventListener('click', () => {
+        selectedEmoji = emoji.getAttribute('data-emoji'); // Get the emoji value
+        resultDisplay.textContent = `You selected: ${selectedEmoji.charAt(0).toUpperCase() + selectedEmoji.slice(1)}`;
+        
+        // Display a suggestion based on the selected emoji
+        if (selectedEmoji === 'angry') {
+            suggestionDisplay.textContent = 'Try to take a deep breath and relax.';
+        } else if (selectedEmoji === 'anxious') {
+            suggestionDisplay.textContent = 'Have you tried talking to someone?';
+        } else if (selectedEmoji === 'happy') {
+            suggestionDisplay.textContent = 'Enjoy the moment, you deserve it!';
+        } else if (selectedEmoji === 'neutral') {
+            suggestionDisplay.textContent = 'It\'s okay to feel this way, take it easy!';
+        } else if (selectedEmoji === 'sad') {
+            suggestionDisplay.textContent = 'Don\'t hesitate to reach out for support.';
+        } else if (selectedEmoji === 'tired') {
+            suggestionDisplay.textContent = 'Make sure to get enough rest tonight!';
+        }
+        
+        console.log(`Emoji clicked: ${selectedEmoji}`); // Log the selection
+    });
+});
+
+submitButton.addEventListener('click', () => {
+    if (!selectedEmoji) {
+        alert('Please select an emoji before submitting.');
+        return;
+    }
+
+    const moodData = {
+        username: document.getElementById('username').value, // Replace with actual username from login if needed
+        mood: selectedEmoji,
+    };
+
+    console.log('Mood Data:', moodData);
+    alert('Mood submitted successfully!');
 });
