@@ -1,10 +1,13 @@
 const loginTab = document.getElementById('login-tab');
 const registerTab = document.getElementById('register-tab');
+const authTabs = document.getElementById('auth-tabs'); // Add this to target the auth-tabs
 const loginScreen = document.getElementById('login-screen');
 const registerScreen = document.getElementById('register-screen');
 const moodTrackerScreen = document.getElementById('mood-tracker-screen');
 const registerButton = document.getElementById('register-button');
 const loginButton = document.getElementById('login-button');
+const logoutButton = document.getElementById('logout-button');
+
 
 // Toggle between login and register screens
 loginTab.addEventListener('click', () => {
@@ -72,9 +75,11 @@ loginButton.addEventListener('click', async () => {
         const result = await response.json();
         if (result.status === 'approved') {
             alert(`Login approved. Welcome, ${username}!`);
-            // Hide the login screen and show the mood tracker screen
+            // Hide the login/register buttons and login screen, show mood tracker screen
+            authTabs.classList.add('hidden'); // Hides the login/register buttons
             loginScreen.classList.add('hidden');
             moodTrackerScreen.classList.remove('hidden');
+            logoutButton.classList.remove('hidden');
         } else {
             alert(result.message || 'Invalid credentials. Please try again.');
         }
@@ -82,4 +87,11 @@ loginButton.addEventListener('click', async () => {
         console.error('Error during login:', error);
         alert('An error occurred during login. Please try again.');
     }
+});
+
+logoutButton.addEventListener('click', () => {
+    moodTrackerScreen.classList.add('hidden');
+    authTabs.classList.remove('hidden');
+    loginScreen.classList.remove('hidden');
+    logoutButton.classList.add('hidden');
 });
