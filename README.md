@@ -14,7 +14,7 @@ Upon logging in, they can select an emoji based on how they feel. They will then
 
 This is an example of the login screen:  
 
-<img src="img/login_interface.png" alt="Login interface" width="600"/>
+<img src="img/login_interface.png" alt="Login interface" width="800"/>
 
 And this is an example of the selection interface:  
 
