@@ -3,7 +3,7 @@
 
 This is our team submission for the EXCS Movember Hackathon, with the theme Code for Good / Men's Health.  
 
-### The website is online at (https://www.climberlog.co.uk)
+### The website is online at (https://climberlog.co.uk)
 
 ## Summary
 
