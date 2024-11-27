@@ -1,160 +1,88 @@
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Emoji Picker with Login</title>
-        <style>
-            body {
-                font-family: Arial, sans-serif;
-                text-align: center;
-                margin: 20px;
-            }
-            .hidden {
-                display: none;
-            }
-            .emoji-container {
-                display: flex;
-                justify-content: center;
-                flex-wrap: wrap;
-                gap: 15px;
-                margin-top: 20px;
-            }
-            .emoji {
-                width: 100px;
-                height: 100px;
-                cursor: pointer;
-                transition: transform 0.2s;
-            }
-            .emoji:hover {
-                transform: scale(1.2);
-            }
-            .form-container, .mood-tracker-container {
-                margin-top: 30px;
-            }
-            input, button {
-                margin: 10px 0;
-                padding: 10px;
-                width: 80%;
-                max-width: 300px;
-                font-size: 16px;
-            }
-            /* Add some styling for the suggestion text */
-            .suggestion {
-                margin-top: 10px;
-                font-size: 16px;
-                font-style: italic;
-                color: #555;
-            }
-        </style>
-    </head>
-    <body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emoji Picker with Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+        .hidden {
+            display: none;
+        }
+        .emoji-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .emoji {
+            width: 100px;
+            height: 100px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .emoji:hover {
+            transform: scale(1.2);
+        }
+        .form-container, .mood-tracker-container {
+            margin-top: 30px;
+        }
+        input, button {
+            margin: 10px 0;
+            padding: 10px;
+            width: 80%;
+            max-width: 300px;
+            font-size: 16px;
+        }
+        .suggestion {
+            margin-top: 10px;
+            font-size: 16px;
+            font-style: italic;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
 
-        <h1 id="welcome-title">Welcome to the Mood Tracker</h1>
+    <h1 id="welcome-title">Welcome to the Mood Tracker</h1>
 
-        <!-- Login/Sign-up Screen -->
-        <div id="auth-tabs">
-            <button id="login-tab">Login</button>
-            <button id="register-tab">Register</button>
+    <div id="auth-tabs">
+        <button id="login-tab">Login</button>
+        <button id="register-tab">Register</button>
+    </div>
+
+    <div id="register-screen" class="form-container hidden">
+        <input type="text" id="register-username" placeholder="Enter Username">
+        <input type="password" id="register-password" placeholder="Enter Password">
+        <button id="register-button">Register</button>
+    </div>
+
+    <div id="login-screen" class="form-container">
+        <input type="text" id="username" placeholder="Enter Username">
+        <input type="password" id="password" placeholder="Enter Password">
+        <button id="login-button">Login</button>
+    </div>
+
+    <div id="mood-tracker-screen" class="hidden">
+        <h2>Select Your Mood</h2>
+        <div class="emoji-container">
+            <img src="images/angry.png" alt="Angry" class="emoji" data-emoji="angry">
+            <img src="images/anxious.png" alt="Anxious" class="emoji" data-emoji="anxious">
+            <img src="images/happy.png" alt="Happy" class="emoji" data-emoji="happy">
+            <img src="images/neutral.png" alt="Neutral" class="emoji" data-emoji="neutral">
+            <img src="images/sad.png" alt="Sad" class="emoji" data-emoji="sad">
+            <img src="images/tired.png" alt="Tired" class="emoji" data-emoji="tired">
         </div>
-        <div id="register-screen" class="form-container hidden">
-            <input type="text" id="register-username" placeholder="Enter Username">
-            <input type="password" id="register-password" placeholder="Enter Password">
-            <button id="register-button">Register</button>
-        </div>
-        <div id="login-screen" class="form-container">
-            <input type="text" id="username" placeholder="Enter Username">
-            <input type="password" id="password" placeholder="Enter Password">
-            <button id="login-button">Login</button>
-        </div>
-        
+        <p id="result" style="margin-top: 20px; font-size: 18px;"></p>
+        <p id="suggestion" class="suggestion"></p>
+        <button id="submit" style="margin-top: 20px;">Submit</button>
+    </div>
 
-        <!-- Mood Tracker Screen -->
-        <div id="mood-tracker-screen" class="hidden">
-            <h2>Select Your Mood</h2>
-            <div class="emoji-container">
-                <img src="images/angry.png" alt="Angry" class="emoji" data-emoji="angry">
-                <img src="images/anxious.png" alt="Anxious" class="emoji" data-emoji="anxious">
-                <img src="images/happy.png" alt="Happy" class="emoji" data-emoji="happy">
-                <img src="images/neutral.png" alt="Neutral" class="emoji" data-emoji="neutral">
-                <img src="images/sad.png" alt="Sad" class="emoji" data-emoji="sad">
-                <img src="images/tired.png" alt="Tired" class="emoji" data-emoji="tired">
-            </div>
-            <p id="result" style="margin-top: 20px; font-size: 18px;"></p>
-            <!-- Suggestion message placeholder -->
-            <p id="suggestion" class="suggestion"></p>
-            <button id="submit" style="margin-top: 20px;">Submit</button>
-        </div>
-
-        <script>
-            const loginButton = document.getElementById('login-button');
-            const moodTrackerScreen = document.getElementById('mood-tracker-screen');
-            const loginScreen = document.getElementById('login-screen');
-            const emojis = document.querySelectorAll('.emoji');
-            const resultDisplay = document.getElementById('result');
-            const suggestionDisplay = document.getElementById('suggestion'); // For displaying suggestions
-            const submitButton = document.getElementById('submit');
-            let selectedEmoji = null;
-
-            // Handle login/sign-up button click
-            loginButton.addEventListener('click', () => {
-                const username = document.getElementById('username').value;
-                const password = document.getElementById('password').value;
-
-                if (!username || !password) {
-                    alert('Please enter both username and password.');
-                    return;
-                }
-
-                // Simulate successful login/sign-up
-                alert(`Welcome, ${username}!`);
-                loginScreen.classList.add('hidden');
-                moodTrackerScreen.classList.remove('hidden');
-            });
-
-            // Add click event listeners to each emoji
-            emojis.forEach(emoji => {
-                emoji.addEventListener('click', () => {
-                    selectedEmoji = emoji.getAttribute('data-emoji');
-                    resultDisplay.textContent = `You selected: ${selectedEmoji.charAt(0).toUpperCase() + selectedEmoji.slice(1)}`;
-                    
-                    // Display a suggestion based on the emoji selected
-                    if (selectedEmoji === 'angry') {
-                        suggestionDisplay.textContent = 'Try to take a deep breath and relax.';
-                    } else if (selectedEmoji === 'anxious') {
-                        suggestionDisplay.textContent = 'Have you tried talking to someone?';
-                    } else if (selectedEmoji === 'happy') {
-                        suggestionDisplay.textContent = 'Enjoy the moment, you deserve it!';
-                    } else if (selectedEmoji === 'neutral') {
-                        suggestionDisplay.textContent = 'It\'s okay to feel this way, take it easy!';
-                    } else if (selectedEmoji === 'sad') {
-                        suggestionDisplay.textContent = 'Don\'t hesitate to reach out for support.';
-                    } else if (selectedEmoji === 'tired') {
-                        suggestionDisplay.textContent = 'Make sure to get enough rest tonight!';
-                    }
-                    
-                    console.log(`Emoji clicked: ${selectedEmoji}`);
-                });
-            });
-
-            // Handle form submission
-            submitButton.addEventListener('click', () => {
-                if (!selectedEmoji) {
-                    alert('Please select an emoji.');
-                    return;
-                }
-
-                const userData = {
-                    username: document.getElementById('username').value,
-                    mood: selectedEmoji
-                };
-
-                console.log('Mood Data in JSON:', JSON.stringify(userData));
-                alert('Mood submitted successfully!');
-            });
-        </script>
-
-
-        <script src="auth.js" defer></script>
-    </body>
-    </html>
+    <script src="auth.js" defer></script>
+</body>
+</html>

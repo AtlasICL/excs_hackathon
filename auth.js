@@ -1,7 +1,11 @@
 const loginTab = document.getElementById('login-tab');
 const registerTab = document.getElementById('register-tab');
+const loginScreen = document.getElementById('login-screen');
 const registerScreen = document.getElementById('register-screen');
+const registerButton = document.getElementById('register-button');
+const loginButton = document.getElementById('login-button');
 
+// Toggle between login and register screens
 loginTab.addEventListener('click', () => {
     loginScreen.classList.remove('hidden');
     registerScreen.classList.add('hidden');
@@ -12,9 +16,7 @@ registerTab.addEventListener('click', () => {
     loginScreen.classList.add('hidden');
 });
 
-
-const registerButton = document.getElementById('register-button');
-
+// Handle registration
 registerButton.addEventListener('click', async () => {
     const username = document.getElementById('register-username').value;
     const password = document.getElementById('register-password').value;
@@ -24,34 +26,58 @@ registerButton.addEventListener('click', async () => {
         return;
     }
 
-    // Create JSON object for registration
-    const registerData = {
-        username: username,
-        password: password
-    };
+    const registerData = { username, password };
 
-    // Send JSON to the /register path
     try {
         const response = await fetch('https://climberlog.co.uk:8065/register', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(registerData)
+            body: JSON.stringify(registerData),
         });
 
         const result = await response.json();
         if (result.status === 'approved') {
-            alert('Registration approved! Token: ' + result.token);
-        } else if (result.status === 'dropped') {
-            alert('Registration was dropped. Please try again.');
+            alert('Registration approved! You can now log in.');
+            registerScreen.classList.add('hidden');
+            loginScreen.classList.remove('hidden');
+        } else {
+            alert(result.message || 'Registration failed. Please try again.');
         }
     } catch (error) {
         console.error('Error during registration:', error);
-        alert('An error occurred. Please try again.');
+        alert('An error occurred during registration. Please try again.');
     }
 });
 
-if (result.status === 'approved') {
-    alert('Registration approved! You can now log in.');
-    registerScreen.classList.add('hidden');
-    loginScreen.classList.remove('hidden');
-}
+// Handle login
+loginButton.addEventListener('click', async () => {
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+
+    if (!username || !password) {
+        alert('Please enter both username and password.');
+        return;
+    }
+
+    const loginData = { username, password };
+
+    try {
+        const response = await fetch('https://climberlog.co.uk:8065/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(loginData),
+        });
+
+        const result = await response.json();
+        if (result.status === 'approved') {
+            alert(`Login approved. Welcome, ${username}!`);
+            loginScreen.classList.add('hidden');
+            // Show mood tracker or other screen here
+        } else {
+            alert(result.message || 'Invalid credentials. Please try again.');
+        }
+    } catch (error) {
+        console.error('Error during login:', error);
+        alert('An error occurred during login. Please try again.');
+    }
+});
